@@ -11,15 +11,13 @@ import (
 	"logger"
 )
 
-var MySigningKey = []byte("zaloracaptainjacksparrowsayshiassignment")
-
 func GenerateJWT() (string, error) {
 	token := jwt.New(jwt.SigningMethodHS256)
 	claims := token.Claims.(jwt.MapClaims)
 	claims["authorized"] = true
 	claims["client"] = "Zalora Client"
 	claims["exp"] = time.Now().Add(time.Minute * 30).Unix()
-	tokenString, err := token.SignedString(MySigningKey)
+	tokenString, err := token.SignedString(constants.JWTSigningKey)
 	if err != nil {
 		fmt.Println("Error while generating token: ", err.Error())
 		return "", err
@@ -35,7 +33,7 @@ func IsAuthorized(ginContext *gin.Context) {
 			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 				return nil, fmt.Errorf("there was an error")
 			}
-			return MySigningKey, nil
+			return constants.JWTSigningKey, nil
 		})
 		if err != nil {
 			logger.ZaloraStatsLogger.Error(constants.AuthLogBucketName, logIdentifier,

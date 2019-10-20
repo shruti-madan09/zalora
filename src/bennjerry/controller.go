@@ -1,7 +1,6 @@
 package bennjerry
 
 import (
-	"bennjerry/structs"
 	"encoding/json"
 	"net/http"
 	"runtime/debug"
@@ -10,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"bennjerry/model"
+	"bennjerry/structs"
 	"constants"
 	"logger"
 	"utils"
@@ -72,6 +72,7 @@ func CreateData(ginContext *gin.Context) {
 		serializer.ReturnUnAuthorized(ginContext, constants.UnAuthorizedErrorMessage)
 		return
 	}
+
 	postData := ginContext.DefaultPostForm("data", "{}")
 	// converting post form data to structure
 	umMarshalErr := json.Unmarshal([]byte(postData), &iceCreamData)
@@ -166,6 +167,7 @@ func ReadData(ginContext *gin.Context) {
 		serializer.ReturnUnAuthorized(ginContext, constants.UnAuthorizedErrorMessage)
 		return
 	}
+
 	productId := ginContext.Params.ByName("product_id")
 	// fetching data from product table using product id
 	// success: false, if some error occurs while running the query
@@ -245,7 +247,7 @@ func UpdateData(ginContext *gin.Context) {
 		}
 	*/
 	var (
-		isAuthorized bool
+		isAuthorized  bool
 		iceCreamData  *structs.IceCreamDataStruct
 		response      *structs.CreateUpdateDeleteResponse
 		responseBytes []byte
@@ -274,6 +276,7 @@ func UpdateData(ginContext *gin.Context) {
 		serializer.ReturnUnAuthorized(ginContext, constants.UnAuthorizedErrorMessage)
 		return
 	}
+
 	productId := ginContext.Params.ByName("product_id")
 	// fetching id (primary key) of ice cream product using product_id
 	// success: false, if some error occurs while running the query
@@ -383,6 +386,7 @@ func DeleteData(ginContext *gin.Context) {
 		serializer.ReturnUnAuthorized(ginContext, constants.UnAuthorizedErrorMessage)
 		return
 	}
+
 	productId := ginContext.Params.ByName("product_id")
 	// If URL param permanent=1 is not present then record will only be soft deleted i.e. marked as inactive
 	isPermanentDelete := ginContext.DefaultQuery("permanent", "0") == "1"

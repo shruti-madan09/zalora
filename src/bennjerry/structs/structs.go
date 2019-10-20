@@ -1,5 +1,6 @@
 package structs
 
+// Information of an ice cream product: used to parse create/upload request data and also to send read response
 type IceCreamDataStruct struct {
 	AllergyInfo           string   `json:"allergy_info"`
 	Description           string   `json:"description"`
@@ -14,12 +15,14 @@ type IceCreamDataStruct struct {
 	Ingredients           []string `json:"ingredients"`
 }
 
+// Response structure of create/update/delete
 type CreateUpdateDeleteResponse struct {
 	Message string `json:"message"`
 	Id      int    `json:"id"`
 	Success bool   `json:"success"`
 }
 
+// Response structure of read
 type ReadResponse struct {
 	Message string              `json:"message"`
 	Success bool                `json:"success"`

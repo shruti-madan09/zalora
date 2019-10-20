@@ -15,9 +15,9 @@ type Serializer struct {
 
 func GetSerializer(serializerType string) *Serializer {
 	/*
-	To send content type based on serializer type (e.g. json, proto)
-	Arguments: string
-	Returns: *Serializer
+		To send content type based on serializer type (e.g. json, proto)
+		Arguments: string
+		Returns: *Serializer
 	*/
 	switch serializerType {
 	default:
@@ -29,7 +29,7 @@ func GetSerializer(serializerType string) *Serializer {
 
 func (serializer *Serializer) ReturnOk(ginContext *gin.Context, result []byte) {
 	/*
-	To send http success response with response as []byte
+		To send http success response with response as []byte
 	*/
 	if ginContext.IsAborted() {
 		return
@@ -64,10 +64,10 @@ func (serializer *Serializer) ReturnUnAuthorized(ginContext *gin.Context, sFmt s
 
 func ListToMap(list []string) map[string]bool {
 	/*
-	To iterate over a list of string and convert it to a map of string and boolean
-	Arguments: []string
-	Returns: map[string]bool
-	 */
+		To iterate over a list of string and convert it to a map of string and boolean
+		Arguments: []string
+		Returns: map[string]bool
+	*/
 	result := make(map[string]bool)
 	for _, each := range list {
 		result[each] = true

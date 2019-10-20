@@ -3,15 +3,14 @@ package model
 import (
 	"database/sql"
 	"fmt"
-	"mysqlc"
 	"strconv"
 
 	_ "github.com/go-sql-driver/mysql"
 
 	"constants"
 	"logger"
+	"mysqlc"
 )
-
 
 func SelectFromProductByProductId(productId string) (*Product, bool) {
 	/*
@@ -220,7 +219,7 @@ func SelectFromProductSourcingValueByProductIdPK(txn *sql.Tx, productIdPK int) [
 	query := "SELECT product_sourcingvalue.product_id, product_sourcingvalue.sourcingvalue_id, sourcingvalue.name" +
 		" FROM product_sourcingvalue INNER JOIN sourcingvalue" +
 		" ON product_sourcingvalue.sourcingvalue_id = sourcingvalue.id" +
-		" WHERE product_sourcingvalue.product_id = "+strconv.Itoa(productIdPK)
+		" WHERE product_sourcingvalue.product_id = " + strconv.Itoa(productIdPK)
 	selectQ, err := txn.Query(query)
 	if err != nil {
 		logger.ZaloraStatsLogger.Error(constants.MySQLLogBucketName, logIdentifier+funcName,
@@ -276,7 +275,7 @@ func SelectFromProductIngredientByProductIdPK(txn *sql.Tx, productIdPK int) []*P
 	query := "SELECT product_ingredient.product_id, product_ingredient.ingredient_id, ingredient.name" +
 		" FROM product_ingredient INNER JOIN ingredient" +
 		" ON product_ingredient.ingredient_id = ingredient.id" +
-		" WHERE product_ingredient.product_id = "+strconv.Itoa(productIdPK)
+		" WHERE product_ingredient.product_id = " + strconv.Itoa(productIdPK)
 	selectQ, err := txn.Query(query)
 	if err != nil {
 		logger.ZaloraStatsLogger.Error(constants.MySQLLogBucketName, logIdentifier+funcName,
@@ -295,5 +294,3 @@ func SelectFromProductIngredientByProductIdPK(txn *sql.Tx, productIdPK int) []*P
 	}
 	return result
 }
-
-

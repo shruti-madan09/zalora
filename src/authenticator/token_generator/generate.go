@@ -11,5 +11,4 @@ func main() {
 	if err == nil {
 		fmt.Println("Token: ", token)
 	}
-
 }

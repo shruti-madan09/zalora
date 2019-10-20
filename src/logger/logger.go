@@ -18,7 +18,7 @@ var (
 
 func Init() {
 	pwd, _ := os.Getwd()
-	ZaloraStatsLogger = NewLogger(pwd+constants.LoggerFilePath)
+	ZaloraStatsLogger = NewLogger(pwd + constants.LoggerFilePath)
 }
 
 func NewLogger(filePath string) *Logger {

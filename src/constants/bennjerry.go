@@ -1,7 +1,7 @@
 package constants
 
 const (
-	RequestInvalidErrorMessage = "Request invalid"
+	RequestInvalidErrorMessage    = "Request invalid"
 	CreateSuccessMessage          = "Successfully created"
 	ReadSuccessMessage            = "Successfully fetched"
 	UpdateSuccessMessage          = "Successfully updated"

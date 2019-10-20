@@ -51,7 +51,7 @@ func TestReadDataNoRecordFound(t *testing.T) {
 	/*
 		Testing Scenario: Calling read api with product_id that doesn't exist in DB
 		Expectation: Appropriate error response
-	 */
+	*/
 	mysqlc.Init()
 	logger.Init()
 	route := gin.Default()
@@ -90,7 +90,7 @@ func TestReadDataNoRecordFound(t *testing.T) {
 			t.Fatalf("Error while parsing response %s\n", unMarshallErr.Error())
 		}
 		if resp.Success || resp.Data != nil || resp.Message != constants.NoRecordsFoundMessage {
-			t.Fatalf("Expected response {success: false, data: nil, message: %s} but got" +
+			t.Fatalf("Expected response {success: false, data: nil, message: %s} but got"+
 				" {sucess: %v, data: %v, message: %s}\n", constants.NoRecordsFoundMessage, resp.Success, resp.Data,
 				resp.Message)
 		}
@@ -102,7 +102,7 @@ func TestReadData(t *testing.T) {
 	/*
 		Testing Scenario: Calling read api with correct url params and request headers
 		Expectation: Success response with complete information of requested product_id
-	 */
+	*/
 	mysqlc.Init()
 	logger.Init()
 	route := gin.Default()
@@ -141,16 +141,17 @@ func TestReadData(t *testing.T) {
 			t.Fatalf("Error while parsing response %s\n", unMarshallErr.Error())
 		}
 
+		// Comparing received response with expected response
 		expectedIceCreamData := &structs.IceCreamDataStruct{
-			ProductId: "test123",
-			Name: "Name of Ice Cream",
-			ImageClosed: "Link of closed image",
-			ImageOpened: "Link of open image",
-			Description: "Description of Ice Cream",
-			Story: "Story of Ice Cream",
-			SourcingValues: []string{"List", "of", "sourcing", "values"},
-			Ingredients: []string{"List", "of", "ingredients"},
-			AllergyInfo: "Allergy related information",
+			ProductId:             "test123",
+			Name:                  "Name of Ice Cream",
+			ImageClosed:           "Link of closed image",
+			ImageOpened:           "Link of open image",
+			Description:           "Description of Ice Cream",
+			Story:                 "Story of Ice Cream",
+			SourcingValues:        []string{"List", "of", "sourcing", "values"},
+			Ingredients:           []string{"List", "of", "ingredients"},
+			AllergyInfo:           "Allergy related information",
 			DietaryCertifications: "Name of dietary certifications",
 		}
 		isDataMatching := resp.Data != nil && resp.Data.ProductId == expectedIceCreamData.ProductId &&
@@ -164,7 +165,7 @@ func TestReadData(t *testing.T) {
 			resp.Data.DietaryCertifications == expectedIceCreamData.DietaryCertifications
 
 		if !resp.Success || !isDataMatching || resp.Message != constants.ReadSuccessMessage {
-			t.Fatalf("Expected response {success: true, data: %v, message: %s} but got" +
+			t.Fatalf("Expected response {success: true, data: %v, message: %s} but got"+
 				" {success: %v, data: %v, message: %s}\n", expectedIceCreamData, constants.ReadSuccessMessage,
 				resp.Success, resp.Data, resp.Message)
 		}

@@ -15,9 +15,9 @@ var (
 
 func Init() {
 	/*
-	Connecting to mysql
-	Raising panic, if connection is not made properly
-	 */
+		Connecting to mysql
+		Raising panic, if connection is not made properly
+	*/
 	DBConnecting()
 	MySqlDB.SetMaxOpenConns(constants.MySQLMaxOpenConnection)
 	MySqlDB.SetMaxIdleConns(constants.MySQLMaxIdleConnection)
@@ -28,8 +28,8 @@ func Init() {
 
 func DBConnecting() {
 	/*
-	Opening a connection to mysql
-	 */
+		Opening a connection to mysql
+	*/
 	MySqlDB, mySqlErr = sql.Open("mysql",
 		constants.MySQLUserName+":"+constants.MySQLPassword+"@/"+constants.MySQLDBName)
 	if mySqlErr != nil {
@@ -39,8 +39,7 @@ func DBConnecting() {
 
 func DBClosing() {
 	/*
-	Closing mysql connection
-	 */
+		Closing mysql connection
+	*/
 	MySqlDB.Close()
 }
-

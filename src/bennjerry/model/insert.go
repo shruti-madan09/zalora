@@ -1,7 +1,6 @@
 package model
 
 import (
-	"bennjerry/structs"
 	"database/sql"
 	"fmt"
 	"strconv"
@@ -9,6 +8,7 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 
+	"bennjerry/structs"
 	"constants"
 	"logger"
 )
@@ -55,7 +55,8 @@ func InsertIntoSourcingValue(txn *sql.Tx, nameMap map[string]bool) bool {
 	*/
 	funcName := "InsertIntoSourcingValue"
 	for name := range nameMap {
-		query := "INSERT IGNORE INTO sourcingvalue (name) VALUES ('" + name + "')"
+		query := "INSERT IGNORE INTO sourcingvalue (name)" +
+			" VALUES ('" + strings.Replace(name, "'", "''", -1) + "')"
 		_, err := txn.Exec(query)
 		if err != nil {
 			logger.ZaloraStatsLogger.Error(constants.MySQLLogBucketName, logIdentifier+funcName,
@@ -72,7 +73,8 @@ func InsertIntoIngredient(txn *sql.Tx, nameMap map[string]bool) bool {
 	*/
 	funcName := "InsertIntoIngredient"
 	for name := range nameMap {
-		query := "INSERT IGNORE INTO ingredient (name) VALUES ('" + name + "')"
+		query := "INSERT IGNORE INTO ingredient (name)" +
+			" VALUES ('" + strings.Replace(name, "'", "''", -1) + "')"
 		_, err := txn.Exec(query)
 		if err != nil {
 			logger.ZaloraStatsLogger.Error(constants.MySQLLogBucketName, logIdentifier+funcName,
@@ -89,7 +91,8 @@ func InsertIntoDietaryCertification(txn *sql.Tx, nameMap map[string]bool) bool {
 	*/
 	funcName := "InsertIntoDietaryCertification"
 	for name := range nameMap {
-		query := "INSERT IGNORE INTO dietarycertification (name) VALUES ('" + name + "')"
+		query := "INSERT IGNORE INTO dietarycertification (name)" +
+			" VALUES ('" + strings.Replace(name, "'", "''", -1) + "')"
 		_, err := txn.Exec(query)
 		if err != nil {
 			logger.ZaloraStatsLogger.Error(constants.MySQLLogBucketName, logIdentifier+funcName,

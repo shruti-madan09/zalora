@@ -105,7 +105,7 @@ func TestUpdateDataEmptyRequest(t *testing.T) {
 			t.Fatalf("Error while parsing response %s\n", unMarshallErr.Error())
 		}
 		if resp.Success || resp.Id != 0 || resp.Message != constants.RequestInvalidErrorMessage {
-			t.Fatalf("Expected response {success: false, id: 0, message: %s} but got {success: %v, id: %d," +
+			t.Fatalf("Expected response {success: false, id: 0, message: %s} but got {success: %v, id: %d,"+
 				" message: %s}\n", constants.RequestInvalidErrorMessage, resp.Success, resp.Id, resp.Message)
 		}
 	}
@@ -162,7 +162,7 @@ func TestUpdateDataUnReadableRequest(t *testing.T) {
 			t.Fatalf("Error while parsing response %s\n", unMarshallErr.Error())
 		}
 		if resp.Success || resp.Id != 0 {
-			t.Fatalf("Expected response {success: false, id: 0, message: unMarshall error message} but got" +
+			t.Fatalf("Expected response {success: false, id: 0, message: unMarshall error message} but got"+
 				" {success: %v, id: %d, message: %s}\n", resp.Success, resp.Id, resp.Message)
 		}
 	}
@@ -173,7 +173,7 @@ func TestUpdateDataNoRecordFound(t *testing.T) {
 	/*
 		Testing Scenario: Calling update api with product_id that doesn't exist in DB
 		Expectation: Appropriate error response
-	 */
+	*/
 	mysqlc.Init()
 	logger.Init()
 	route := gin.Default()
@@ -220,7 +220,7 @@ func TestUpdateDataNoRecordFound(t *testing.T) {
 			t.Fatalf("Error while parsing response %s\n", unMarshallErr.Error())
 		}
 		if resp.Success || resp.Id != 0 || resp.Message != constants.NoRecordsFoundMessage {
-			t.Fatalf("Expected response {success: false, id: 0, message: %s} but got" +
+			t.Fatalf("Expected response {success: false, id: 0, message: %s} but got"+
 				" {sucess: %v, data: %v, message: %s}\n", constants.NoRecordsFoundMessage, resp.Success, resp.Id,
 				resp.Message)
 		}
@@ -280,7 +280,7 @@ func TestUpdateData(t *testing.T) {
 			t.Fatalf("Error while parsing response %s\n", unMarshallErr.Error())
 		}
 		if !resp.Success || resp.Id == 0 || resp.Message != constants.UpdateSuccessMessage {
-			t.Fatalf("Expected response {success: true, id: non-zero, message: %s} but got" +
+			t.Fatalf("Expected response {success: true, id: non-zero, message: %s} but got"+
 				" {sucess: %v, id: %d, message: %s}\n", constants.UpdateSuccessMessage, resp.Success, resp.Id,
 				resp.Message)
 		}

@@ -24,7 +24,7 @@ func TestCreateDataUnAuthorized(t *testing.T) {
 	/*
 		Test Scenario: Calling create api without auth token in header
 		Expectation: Response with status code 401
-	 */
+	*/
 	mysqlc.Init()
 	logger.Init()
 	route := gin.Default()
@@ -61,7 +61,7 @@ func TestCreateDataEmptyRequest(t *testing.T) {
 	/*
 		Testing Scenario: Calling create api with empty post form data in request
 		Expectation: Appropriate error response
-	 */
+	*/
 	mysqlc.Init()
 	logger.Init()
 	route := gin.Default()
@@ -102,7 +102,7 @@ func TestCreateDataEmptyRequest(t *testing.T) {
 			t.Fatalf("Error while parsing response %s\n", unMarshallErr.Error())
 		}
 		if resp.Success || resp.Id != 0 || resp.Message != constants.RequestInvalidErrorMessage {
-			t.Fatalf("Expected response {success: false, id:0, message: %s} but got {success: %v, id: %d," +
+			t.Fatalf("Expected response {success: false, id:0, message: %s} but got {success: %v, id: %d,"+
 				" message: %s}\n", constants.RequestInvalidErrorMessage, resp.Success, resp.Id, resp.Message)
 		}
 	}
@@ -113,7 +113,7 @@ func TestCreateDataUnReadableRequest(t *testing.T) {
 	/*
 		Testing Scenario: Calling create api with invalid json in post form key: `data`
 		Expectation: Appropriate error response
-	 */
+	*/
 	mysqlc.Init()
 	logger.Init()
 	route := gin.Default()
@@ -158,7 +158,7 @@ func TestCreateDataUnReadableRequest(t *testing.T) {
 			t.Fatalf("Error while parsing response %s\n", unMarshallErr.Error())
 		}
 		if resp.Success || resp.Id != 0 {
-			t.Fatalf("Expected response {success: false, id: 0, message: unMarshall error message} but got" +
+			t.Fatalf("Expected response {success: false, id: 0, message: unMarshall error message} but got"+
 				" {success: %v, id: %d, message: %s}\n", resp.Success, resp.Id, resp.Message)
 		}
 	}
@@ -170,7 +170,7 @@ func TestCreateData(t *testing.T) {
 		Testing Scenario: Calling create api with correct request data and headers
 		Expectation: Success response and entry in DB
 		** this DB entry will be used to test read, update, delete apis and will eventually will be cleaned up from DB
-	 */
+	*/
 	mysqlc.Init()
 	logger.Init()
 	route := gin.Default()
@@ -224,7 +224,7 @@ func TestCreateData(t *testing.T) {
 			t.Fatalf("Error while parsing response %s\n", unMarshallErr.Error())
 		}
 		if !resp.Success || resp.Id == 0 || resp.Message != constants.CreateSuccessMessage {
-			t.Fatalf("Expected response {success: true, id: non-zero, message: %s} but got" +
+			t.Fatalf("Expected response {success: true, id: non-zero, message: %s} but got"+
 				" {sucess: %v, id: %d, message: %s}\n", constants.CreateSuccessMessage, resp.Success, resp.Id,
 				resp.Message)
 		}
@@ -237,7 +237,7 @@ func TestCreateDataDuplicateRequest(t *testing.T) {
 		Testing Scenario: Calling create api with duplicate request as previous scenario
 		Expectation: Appropriate error response
 		** product_id in table product has a unique constraint to avoid duplicate data
-	 */
+	*/
 	mysqlc.Init()
 	logger.Init()
 	route := gin.Default()
@@ -291,7 +291,7 @@ func TestCreateDataDuplicateRequest(t *testing.T) {
 			t.Fatalf("Error while parsing response %s\n", unMarshallErr.Error())
 		}
 		if resp.Success || resp.Id != 0 || resp.Message != constants.GenericErrorMessage {
-			t.Fatalf("Expected response {success: false, id: 0, message: %s} but got" +
+			t.Fatalf("Expected response {success: false, id: 0, message: %s} but got"+
 				" {sucess: %v, id: %d, message: %s}\n", constants.GenericErrorMessage, resp.Success, resp.Id,
 				resp.Message)
 		}

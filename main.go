@@ -1,11 +1,11 @@
 package main
 
 import (
-	"constants"
 	"github.com/gin-gonic/gin"
-	"logger"
 
 	"bennjerry"
+	"constants"
+	"logger"
 	"mysqlc"
 )
 

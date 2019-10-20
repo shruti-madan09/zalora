@@ -50,7 +50,7 @@ func TestDeleteDataNoRecordFound(t *testing.T) {
 	/*
 		Testing Scenario: Calling delete api with product_id that doesn't exist in DB
 		Expectation: Appropriate error response
-	 */
+	*/
 	mysqlc.Init()
 	logger.Init()
 	route := gin.Default()
@@ -89,7 +89,7 @@ func TestDeleteDataNoRecordFound(t *testing.T) {
 			t.Fatalf("Error while parsing response %s\n", unMarshallErr.Error())
 		}
 		if resp.Success || resp.Id != 0 || resp.Message != constants.NoRecordsFoundMessage {
-			t.Fatalf("Expected response {success: false, id: 0, message: %s} but got" +
+			t.Fatalf("Expected response {success: false, id: 0, message: %s} but got"+
 				" {success: %v, id: %d, message: %s}\n", constants.NoRecordsFoundMessage, resp.Success, resp.Id,
 				resp.Message)
 		}
@@ -101,7 +101,7 @@ func TestSoftDeleteData(t *testing.T) {
 	/*
 		Testing Scenario: Calling soft delete api with correct url params, query params and request headers
 		Expectation: Success response and record marked as inactive in DB
-	 */
+	*/
 	mysqlc.Init()
 	logger.Init()
 	route := gin.Default()
@@ -140,7 +140,7 @@ func TestSoftDeleteData(t *testing.T) {
 			t.Fatalf("Error while parsing response %s\n", unMarshallErr.Error())
 		}
 		if !resp.Success || resp.Id == 0 || resp.Message != constants.SoftDeleteSuccessMessage {
-			t.Fatalf("Expected response {success: true, id: non-zero, message: %s} but got" +
+			t.Fatalf("Expected response {success: true, id: non-zero, message: %s} but got"+
 				" {sucess: %v, id: %d, message: %s}\n", constants.SoftDeleteSuccessMessage, resp.Success, resp.Id,
 				resp.Message)
 		}
@@ -191,7 +191,7 @@ func TestDeleteData(t *testing.T) {
 			t.Fatalf("Error while parsing response %s\n", unMarshallErr.Error())
 		}
 		if !resp.Success || resp.Id == 0 || resp.Message != constants.PermanentDeleteSuccessMessage {
-			t.Fatalf("Expected response {success: true, id: non-zero, message: %s} but got" +
+			t.Fatalf("Expected response {success: true, id: non-zero, message: %s} but got"+
 				" {sucess: %v, id: %d, message: %s}\n", constants.PermanentDeleteSuccessMessage, resp.Success, resp.Id,
 				resp.Message)
 		}

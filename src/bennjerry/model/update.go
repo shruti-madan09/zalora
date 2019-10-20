@@ -1,45 +1,45 @@
 package model
 
 import (
-	"bennjerry/structs"
 	"database/sql"
-	"logger"
-	"mysqlc"
 	"strconv"
 	"strings"
 
 	_ "github.com/go-sql-driver/mysql"
 
+	"bennjerry/structs"
 	"constants"
+	"logger"
+	"mysqlc"
 )
 
 func UpdateProductById(txn *sql.Tx, id int, iceCreamData *structs.IceCreamDataStruct, fieldsMap map[string]bool) bool {
 	/*
-	To take ice cream data and update fields in product table based on map {fieldName: true}
-	 */
+		To take ice cream data and update fields in product table based on map {fieldName: true}
+	*/
 	funcName := "UpdateProductById"
 	query := "UPDATE product SET"
 	if _, exists := fieldsMap["name"]; exists {
-		query += " name = '"+iceCreamData.Name+"',"
+		query += " name = '" + strings.Replace(iceCreamData.Name, "'", "''", -1) + "',"
 	}
 	if _, exists := fieldsMap["description"]; exists {
-		query += " description = '"+iceCreamData.Description+"',"
+		query += " description = '" + strings.Replace(iceCreamData.Description, "'", "''", -1) + "',"
 	}
 	if _, exists := fieldsMap["story"]; exists {
-		query += " story = '"+iceCreamData.Story+"',"
+		query += " story = '" + strings.Replace(iceCreamData.Story, "'", "''", -1) + "',"
 	}
 	if _, exists := fieldsMap["image_closed"]; exists {
-		query += " image_closed = '"+iceCreamData.ImageClosed+"',"
+		query += " image_closed = '" + strings.Replace(iceCreamData.ImageClosed, "'", "''", -1) + "',"
 	}
 	if _, exists := fieldsMap["image_open"]; exists {
-		query += " image_open = '"+iceCreamData.ImageOpened+"',"
+		query += " image_open = '" + strings.Replace(iceCreamData.ImageOpened, "'", "''", -1) + "',"
 	}
 	if _, exists := fieldsMap["allergy_info"]; exists {
-		query += " allergy_info = '"+iceCreamData.AllergyInfo+"',"
+		query += " allergy_info = '" + strings.Replace(iceCreamData.AllergyInfo, "'", "''", -1) + "',"
 	}
 	if _, exists := fieldsMap["dietary_certifications"]; exists {
 		if iceCreamData.DietaryCertifications != "" {
-			nameMap := map[string]bool {
+			nameMap := map[string]bool{
 				iceCreamData.DietaryCertifications: true,
 			}
 			success := InsertIntoDietaryCertification(txn, nameMap)
@@ -47,7 +47,7 @@ func UpdateProductById(txn *sql.Tx, id int, iceCreamData *structs.IceCreamDataSt
 				return false
 			}
 			dietaryCertificationId := SelectFromDietaryCertification(txn, []string{iceCreamData.DietaryCertifications})
-			query += " dietary_certification_id = '"+strconv.Itoa(dietaryCertificationId[0].Id)+"',"
+			query += " dietary_certification_id = '" + strconv.Itoa(dietaryCertificationId[0].Id) + "',"
 		} else {
 			query += " dietary_certification_id = NULL,"
 		}
@@ -58,15 +58,15 @@ func UpdateProductById(txn *sql.Tx, id int, iceCreamData *structs.IceCreamDataSt
 	if err != nil {
 		logger.ZaloraStatsLogger.Error(constants.MySQLLogBucketName, logIdentifier+funcName,
 			constants.MySQLQueryRunErrorMessage, err.Error())
-    }
-    return true
+	}
+	return true
 }
 
 func UpdateProductSourcingValueByProductIdPK(txn *sql.Tx, productIdPK int, nameMap map[string]bool) bool {
 	/*
-	Take product_id (primary key of product table) and map {name: true}
-	and update data in product_sourcingvalue table
-	 */
+		Take product_id (primary key of product table) and map {name: true}
+		and update data in product_sourcingvalue table
+	*/
 	productPropertyData := SelectFromProductSourcingValueByProductIdPK(txn, productIdPK)
 	existingNameMap := make(map[string][]int)
 	for _, productProperty := range productPropertyData {
@@ -79,15 +79,15 @@ func UpdateProductSourcingValueByProductIdPK(txn *sql.Tx, productIdPK int, nameM
 			existingNameMap[productProperty.PropertyName] = []int{productProperty.ProductId, productProperty.PropertyId}
 		}
 	}
-    for name := range nameMap {
-    	if idList, exists := existingNameMap[name]; !exists {
-    		success := InsertToProductSourcingValueById(txn, idList[0], idList[1])
-    		if !success {
-    			return false
+	for name := range nameMap {
+		if idList, exists := existingNameMap[name]; !exists {
+			success := InsertToProductSourcingValueById(txn, idList[0], idList[1])
+			if !success {
+				return false
 			}
-    	}
-    }
-    return true
+		}
+	}
+	return true
 }
 
 func UpdateProductIngredientByProductIdPK(txn *sql.Tx, productIdPK int, nameMap map[string]bool) bool {
@@ -107,15 +107,15 @@ func UpdateProductIngredientByProductIdPK(txn *sql.Tx, productIdPK int, nameMap 
 			existingNameMap[productProperty.PropertyName] = []int{productProperty.ProductId, productProperty.PropertyId}
 		}
 	}
-    for name := range nameMap {
-    	if idList, exists := existingNameMap[name]; !exists {
+	for name := range nameMap {
+		if idList, exists := existingNameMap[name]; !exists {
 			success := InsertToProductIngredientById(txn, idList[0], idList[1])
 			if !success {
 				return false
 			}
-    	}
-    }
-    return true
+		}
+	}
+	return true
 }
 
 func UpdateProductIsInActiveByProductId(productId string) (int, bool) {

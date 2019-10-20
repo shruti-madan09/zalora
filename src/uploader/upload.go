@@ -1,13 +1,13 @@
 package main
 
 import (
-	"bennjerry/structs"
-	"bennjerry/model"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"os"
 
+	"bennjerry/model"
+	"bennjerry/structs"
 	"constants"
 	"logger"
 	"mysqlc"
