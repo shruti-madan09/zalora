@@ -15,7 +15,7 @@
   * https://github.com/go-sql-driver/mysql to connect and interact with MySql DB.
   
 ## Database schema
-
+![Image of DBSchema](https://github.com/shruti-madan09/zalora/blob/master/zalora.png)
 
 ## Code Structure & Implementation Details
 ### vendor
@@ -74,7 +74,7 @@
         "message": "success or failure message"
       }
     ```
-  * **Read api**: Accepts product id, fetches from DB and returns, all information corresponding to that product
+  * **Read api**: Accepts product id, fetches from DB and returns, all information corresponding to that product.
     * Information of a product will be returned only if it is not marked as inactive in DB.
     * File name: src/bennjerry/controller.go
     * Function name: ***ReadData***
@@ -138,14 +138,13 @@
         "message": "success/failure message"
       }
     ```
-
-   * **Delete api**: Accepts a product_id and deletes(temporarily/permanently) all information corresponding to the product.
-    * ***Soft delete***: Product is simply marked as inactive (updating column ***'is_inactive'*** = 1) but not actually deleted from the DB.
+  * **Delete api**: Accepts product id and deletes(temporarily/permanently) all information corresponding to the product.
+    * ***Soft Delete***: Product is simply marked as inactive (updating column ***'is_inactive'*** = 1) but not actually deleted from the DB. 
     * ***Permanent delete***: All information corresponding to the requested product_id is deleted from the table.
-      * First the references of the product will be deleted from relation tables.
-      * Then the actual record will be deleted from the ***product*** table.
-      * All of the mysql queries needed in above steps will be executed in a single atomic transaction.
-      * Once the above transaction has been successfully executed, any unused sourcing values, ingredients and dietary certifications will be deleted from the tables.
+    * First the references of the product will be deleted from relation tables.
+    * Then the actual record will be deleted from the ***product*** table.
+    * All of the mysql queries needed in above steps will be executed in a single atomic transaction.
+    * Once the above transaction has been successfully executed, any unused sourcing values, ingredients and dietary certifications will be deleted from the tables.
     * File name: src/bennjerry/controller.go
     * Function name: ***DeleteData***
     ```
@@ -161,7 +160,7 @@
         "message": "success/failure message"
       }
     ```
-      
+   
 * ***authenticator package***: Secures each api endpoint with authentication using JWT.
   * Every request to the application will be passed through a middleware which will look for a token in the request header.
   * The token will be parsed using a JWT signing key (the same that was used to create it) to check its validity.
