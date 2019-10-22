@@ -8,4 +8,7 @@ const (
 	MySQLUserName               = "root"
 	MySQLQueryRunErrorMessage   = "Error while running mysql query"
 	MySQLSelectScanErrorMessage = "Error while scanning select query data"
+	DockerMySQLHostString       = "tcp(db:3306)"
+	DockerMySQLModeEnvVarName   = "Mode"
+	DockerMySQLModeEnvVarValue  = "release"
 )

@@ -17,7 +17,7 @@ func GenerateJWT() (string, error) {
 	claims["authorized"] = true
 	claims["client"] = "Zalora Client"
 	claims["exp"] = time.Now().Add(time.Minute * 30).Unix()
-	tokenString, err := token.SignedString(constants.JWTSigningKey)
+	tokenString, err := token.SignedString([]byte(constants.JWTSigningKey))
 	if err != nil {
 		fmt.Println("Error while generating token: ", err.Error())
 		return "", err
@@ -33,7 +33,7 @@ func IsAuthorized(ginContext *gin.Context) {
 			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 				return nil, fmt.Errorf("there was an error")
 			}
-			return constants.JWTSigningKey, nil
+			return []byte(constants.JWTSigningKey), nil
 		})
 		if err != nil {
 			logger.ZaloraStatsLogger.Error(constants.AuthLogBucketName, logIdentifier,

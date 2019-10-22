@@ -65,16 +65,20 @@ func InsertRecord(iceCreamData []*structs.IceCreamDataStruct) ([]int, bool) {
 		} else {
 			idList = append(idList, id)
 			// Data will be inserted to relation table of product and sourcing value
-			success = InsertIntoProductSourcingValue(mySqlTxn, id, iceCream.SourcingValues)
-			if !success {
-				mySqlTxn.Rollback()
-				return nil, false
+			if len(iceCream.SourcingValues) > 0 {
+				success = InsertIntoProductSourcingValue(mySqlTxn, id, iceCream.SourcingValues)
+				if !success {
+					mySqlTxn.Rollback()
+					return nil, false
+				}
 			}
 			// Data will be inserted to relation table of product and ingredient
-			success = InsertIntoProductIngredient(mySqlTxn, id, iceCream.Ingredients)
-			if !success {
-				mySqlTxn.Rollback()
-				return nil, false
+			if len(iceCream.Ingredients) > 0 {
+				success = InsertIntoProductIngredient(mySqlTxn, id, iceCream.Ingredients)
+				if !success {
+					mySqlTxn.Rollback()
+					return nil, false
+				}
 			}
 		}
 	}

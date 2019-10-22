@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:8.0.17
+    volumes:
+      - ./bennjerry.sql:/docker-entrypoint-initdb.d/bennjerry.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: bennjerry
+    expose:
+      - "3308"
+    ports:
+      - "3308:3306"
+    tty: true
+  zalora:
+    build: .
+    ports:
+      - "8080:8080"
+    tty: true
+    depends_on:
+      - db

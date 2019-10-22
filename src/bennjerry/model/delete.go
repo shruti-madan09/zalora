@@ -15,7 +15,11 @@ func SoftDeleteFromProductByProductId(productId string) (int, bool) {
 	/*
 		To take product_id and mark record in product table as inactive
 	*/
-	return UpdateProductIsInActiveByProductId(productId)
+	id, success := SelectIdFromProductByProductId(productId)
+	if success {
+		return UpdateProductIsInActiveById(id)
+	}
+	return 0, false
 }
 
 func DeleteFromProductById(txn *sql.Tx, id int) bool {

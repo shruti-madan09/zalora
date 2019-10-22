@@ -2,7 +2,6 @@ package model
 
 import (
 	"database/sql"
-	"fmt"
 	"strconv"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -56,9 +55,7 @@ func SelectIdFromProductByProductId(productId string) (int, bool) {
 				logger.ZaloraStatsLogger.Error(constants.MySQLLogBucketName, logIdentifier+funcName,
 					constants.MySQLSelectScanErrorMessage, err.Error())
 			}
-			fmt.Println("id", id)
 		}
-		fmt.Println("returning ", id)
 		return id, true
 	}
 	return 0, false

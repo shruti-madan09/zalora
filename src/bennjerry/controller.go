@@ -291,7 +291,7 @@ func UpdateData(ginContext *gin.Context) {
 			Message: constants.NoRecordsFoundMessage,
 		}
 	} else {
-		postData := ginContext.DefaultPostForm("data", "{}")
+		postData := ginContext.DefaultPostForm("data", "")
 		postFields := ginContext.DefaultPostForm("fields", "")
 		// converting post form data to structure
 		umMarshalErr := json.Unmarshal([]byte(postData), &iceCreamData)
@@ -301,7 +301,7 @@ func UpdateData(ginContext *gin.Context) {
 			response = &structs.CreateUpdateDeleteResponse{
 				Message: umMarshalErr.Error(),
 			}
-		} else if iceCreamData == nil || iceCreamData.ProductId == "" || postFields == "" {
+		} else if iceCreamData == nil || postFields == "" {
 			response = &structs.CreateUpdateDeleteResponse{
 				Message: constants.RequestInvalidErrorMessage,
 			}

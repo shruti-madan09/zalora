@@ -53,7 +53,7 @@ func UpdateProductById(txn *sql.Tx, id int, iceCreamData *structs.IceCreamDataSt
 		}
 	}
 	query = strings.TrimSuffix(query, ",")
-	query += "WHERE id = " + strconv.Itoa(id)
+	query += " WHERE id = " + strconv.Itoa(id)
 	_, err := txn.Exec(query)
 	if err != nil {
 		logger.ZaloraStatsLogger.Error(constants.MySQLLogBucketName, logIdentifier+funcName,
@@ -118,19 +118,18 @@ func UpdateProductIngredientByProductIdPK(txn *sql.Tx, productIdPK int, nameMap 
 	return true
 }
 
-func UpdateProductIsInActiveByProductId(productId string) (int, bool) {
+func UpdateProductIsInActiveById(id int) (int, bool) {
 	/*
 		Take product_id and update is_inactive = 1 in product table
 	*/
-	funcName := "UpdateProductIsInActiveByProductId"
-	query := "UPDATE product SET is_inactive = 1 WHERE product_id = '" + productId + "'"
-	update, err := mysqlc.MySqlDB.Exec(query)
+	funcName := "UpdateProductIsInActiveById"
+	query := "UPDATE product SET is_inactive = 1 WHERE id = " + strconv.Itoa(id)
+	_, err := mysqlc.MySqlDB.Exec(query)
 	if err != nil {
 		logger.ZaloraStatsLogger.Error(constants.MySQLLogBucketName, logIdentifier+funcName,
 			constants.MySQLQueryRunErrorMessage, err.Error())
 	} else {
-		id, _ := update.RowsAffected()
-		return int(id), true
+		return id, true
 	}
 	return 0, false
 }

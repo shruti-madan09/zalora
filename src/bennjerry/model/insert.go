@@ -2,7 +2,6 @@ package model
 
 import (
 	"database/sql"
-	"fmt"
 	"strconv"
 	"strings"
 
@@ -100,7 +99,6 @@ func InsertIntoDietaryCertification(txn *sql.Tx, nameMap map[string]bool) bool {
 			return false
 		}
 	}
-	fmt.Println("insertign to InsertIntoDietaryCertification", nameMap)
 	return true
 }
 

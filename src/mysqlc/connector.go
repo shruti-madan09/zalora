@@ -2,6 +2,7 @@ package mysqlc
 
 import (
 	"database/sql"
+	"os"
 
 	_ "github.com/go-sql-driver/mysql"
 
@@ -30,8 +31,12 @@ func DBConnecting() {
 	/*
 		Opening a connection to mysql
 	*/
+	var hostString string
+	if os.Getenv(constants.DockerMySQLModeEnvVarName) == constants.DockerMySQLModeEnvVarValue {
+		hostString = constants.DockerMySQLHostString
+	}
 	MySqlDB, mySqlErr = sql.Open("mysql",
-		constants.MySQLUserName+":"+constants.MySQLPassword+"@/"+constants.MySQLDBName)
+		constants.MySQLUserName+":"+constants.MySQLPassword+"@"+hostString+"/"+constants.MySQLDBName)
 	if mySqlErr != nil {
 		panic(mySqlErr.Error())
 	}
