@@ -218,6 +218,9 @@
     * ***MySQLPassword***: MySql password
     * ***MySQLMaxOpenConnection***: Maximum number of open connections to mysql
     * ***MySQLMaxIdleConnection***: Maximum number of idle connections to mysql
+    * ***DockerMySQLHostString***: Host string to connect to mysql while running on docker
+    * ***DockerMySQLModeEnvVarName***: Environment variable name to differentiate between docker and local setup
+    * ***DockerMySQLModeEnvVarValue***: Value of environment variable to indicate docker setup
   * Auth related info (File name: ***src/constants/auth.go***)
     * ***JWTSigningKey***: JWT signing key
     * ***JWTTokenKeyNameInHeader***: Key name to be passed in request header for sending auth token
